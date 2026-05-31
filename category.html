@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editorial Times - News Section</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="loading">
+
+<div class="reading-progress-bar" id="progressBar" aria-hidden="true"></div>
+<a href="#main-content" class="skip-to-content">Skip to content</a>
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Open Navigation"><i class="fas fa-bars"></i></button>
+<button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2 class="sidebar-brand">Editorial Times</h2>
+    <button class="sidebar-close" id="sidebarClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-avatar">ET</div>
+    <div class="user-info"><span class="user-name">Guest Reader</span><span class="user-status">Free Access</span></div>
+  </div>
+  <div class="search-container">
+    <input type="text" placeholder="Search news, topics..." id="searchInput"/>
+    <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
+  </div>
+  <nav class="sidebar-nav">
+    <ul class="menu">
+      <li class="menu-item"><a href="index.html" class="menu-link"><div><i class="fas fa-home"></i><span>Home</span></div></a></li>
+      <li class="menu-item has-submenu">
+        <button class="menu-link toggle-submenu" aria-expanded="false" aria-controls="news-sub">
+          <div><i class="fas fa-newspaper"></i><span>News</span></div><i class="fas fa-chevron-down arrow"></i>
+        </button>
+        <ul class="submenu" id="news-sub">
+          <li><a href="category.html?section=world">World News</a></li>
+          <li><a href="category.html?section=politics">Politics</a></li>
+          <li><a href="category.html?section=business">Business</a></li>
+          <li><a href="category.html?section=technology">Technology</a></li>
+        </ul>
+      </li>
+      <li class="menu-item"><a href="category.html?section=sport" class="menu-link"><div><i class="fas fa-futbol"></i><span>Sports</span></div></a></li>
+      <li class="menu-item"><a href="category.html?section=culture" class="menu-link"><div><i class="fas fa-palette"></i><span>Culture</span></div></a></li>
+      <li class="menu-item"><a href="category.html?section=science" class="menu-link"><div><i class="fas fa-flask"></i><span>Science</span></div></a></li>
+      <li class="menu-item"><a href="category.html?section=environment" class="menu-link"><div><i class="fas fa-leaf"></i><span>Environment</span></div></a></li>
+      <li class="menu-item"><a href="category.html?section=travel" class="menu-link"><div><i class="fas fa-plane"></i><span>Travel</span></div></a></li>
+      <li class="menu-item"><a href="search.html" class="menu-link"><div><i class="fas fa-search"></i><span>Search</span></div></a></li>
+    </ul>
+  </nav>
+  <div class="sidebar-footer">
+    <span class="sidebar-tag">ENGAGE</span>
+    <div class="sidebar-socials">
+      <a href="#"><i class="fab fa-x-twitter"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+</aside>
+
+<div class="main-wrapper">
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo"><a href="index.html" style="text-decoration:none;display:flex;align-items:baseline;gap:.3rem">
+          <span class="logo-text">Editorial</span><span class="logo-accent">Times</span>
+        </a></div>
+      </div>
+      <div class="header-widgets">
+        <div class="header-date"><i class="far fa-calendar-alt"></i><span id="currentDate"></span></div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="top-nav">
+    <ul class="nav-list">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="category.html?section=world">World</a></li>
+      <li><a href="category.html?section=politics">Politics</a></li>
+      <li><a href="category.html?section=business">Business</a></li>
+      <li><a href="category.html?section=technology">Technology</a></li>
+      <li><a href="category.html?section=sport">Sports</a></li>
+      <li><a href="category.html?section=culture">Culture</a></li>
+      <li><a href="category.html?section=science">Science</a></li>
+      <li><a href="category.html?section=environment">Earth</a></li>
+      <li><a href="search.html">Search</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content" id="main-content">
+
+    <!-- Category banner -->
+    <div class="cat-banner" id="catBanner">
+      <div>
+        <div class="cat-banner-title" id="bannerTitle">Loading…</div>
+        <div class="cat-banner-meta" id="bannerMeta"></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.8rem">
+        <div class="cat-banner-icon" id="bannerIcon"></div>
+        <a href="search.html" class="cat-banner-badge">Search All</a>
+      </div>
+    </div>
+
+    <!-- Sort bar -->
+    <div class="sort-bar">
+      <span>SORT BY:</span>
+      <button class="sort-btn active" data-order="newest" onclick="changeSort('newest',this)">Newest</button>
+      <button class="sort-btn" data-order="oldest" onclick="changeSort('oldest',this)">Oldest</button>
+      <button class="sort-btn" data-order="relevance" onclick="changeSort('relevance',this)">Relevance</button>
+    </div>
+
+    <!-- Featured first article -->
+    <div id="catFeature"></div>
+
+    <!-- Articles grid -->
+    <div class="articles-grid" id="articlesGrid"></div>
+
+    <!-- Load More -->
+    <div class="load-more-wrap">
+      <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()" disabled>
+        <i class="fas fa-plus"></i> Load More Articles
+      </button>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand-column">
+        <div class="footer-logo"><span class="logo-text">Editorial</span><span class="logo-accent">Times</span></div>
+        <p class="footer-mission">Independent journalism powered by The Guardian Open Platform.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-x-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <nav class="footer-nav">
+        <div class="footer-links-group">
+          <span class="footer-col-title">Sections</span>
+          <a href="category.html?section=world">World</a>
+          <a href="category.html?section=technology">Technology</a>
+          <a href="category.html?section=sport">Sports</a>
+          <a href="category.html?section=business">Business</a>
+        </div>
+        <div class="footer-links-group">
+          <span class="footer-col-title">More</span>
+          <a href="index.html">Home</a>
+          <a href="search.html">Search</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p class="copyright">Copyright &copy; 2026 Editorial Times. Content via The Guardian API.</p>
+    </div>
+  </footer>
+</div>
+
+<div class="toast-container" id="toastContainer" aria-live="assertive"></div>
+
+<script src="script.js"></script>
+<script src="api.js"></script>
+<script>
+const SECTION_META = {
+  world:        { label:'World News',    icon:'🌍', desc:'Global stories shaping our world' },
+  technology:   { label:'Technology',   icon:'💻', desc:'Innovation, AI and the digital frontier' },
+  sport:        { label:'Sports',       icon:'⚽', desc:'Live scores, results and analysis' },
+  business:     { label:'Business',     icon:'📈', desc:'Markets, economy and corporate news' },
+  politics:     { label:'Politics',     icon:'🏛️', desc:'Policy, elections and government' },
+  culture:      { label:'Culture',      icon:'🎭', desc:'Arts, film, music and books' },
+  science:      { label:'Science',      icon:'🔬', desc:'Discoveries and breakthroughs' },
+  environment:  { label:'Environment',  icon:'🌱', desc:'Climate, nature and sustainability' },
+  travel:       { label:'Travel',       icon:'✈️', desc:'Destinations, tips and adventures' },
+  lifeandstyle: { label:'Life & Style', icon:'❤️', desc:'Food, health and wellbeing' },
+  opinion:      { label:'Opinion',      icon:'💬', desc:'Comment and analysis' },
+  film:         { label:'Film',         icon:'🎬', desc:'Cinema, reviews and interviews' },
+  music:        { label:'Music',        icon:'🎵', desc:'Releases, reviews and artists' },
+  books:        { label:'Books',        icon:'📚', desc:'Literature, reviews and interviews' },
+};
+
+const params = new URLSearchParams(location.search);
+const SECTION = params.get('section') || 'world';
+let currentPage = 1;
+let currentOrder = 'newest';
+let totalPages = 1;
+
+// Set active nav link
+document.querySelectorAll('.nav-list a').forEach(a => {
+  if (a.href.includes(`section=${SECTION}`)) a.classList.add('active');
+});
+
+// Banner
+const meta = SECTION_META[SECTION] || { label: SECTION, icon: '📰', desc: '' };
+document.title = `${meta.label} - Editorial Times`;
+document.getElementById('bannerTitle').textContent = meta.label;
+document.getElementById('bannerMeta').textContent = meta.desc;
+document.getElementById('bannerIcon').textContent = meta.icon;
+
+function changeSort(order, btn) {
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentOrder = order;
+  currentPage = 1;
+  loadArticles(true);
+}
+
+async function loadArticles(reset = false) {
+  if (reset) {
+    document.getElementById('catFeature').innerHTML = skeleton(1);
+    document.getElementById('articlesGrid').innerHTML = skeleton(9);
+  }
+  document.getElementById('loadMoreBtn').disabled = true;
+
+  const data = await getSectionArticles(SECTION, 10, currentPage, currentOrder);
+  if (!data) { document.getElementById('articlesGrid').innerHTML = '<p style="color:hsl(var(--muted))">Could not load articles.</p>'; return; }
+
+  totalPages = data.pages || 1;
+  const articles = data.results || [];
+
+  if (reset) {
+    // Feature card = first article
+    const feature = articles[0];
+    if (feature) {
+      const img = getThumb(feature);
+      const trail = feature.fields?.trailText || '';
+      const url = articlePageUrl(feature);
+      document.getElementById('catFeature').innerHTML = `
+        <div class="cat-feature-card" data-scroll>
+          <div class="cat-feature-img"><img src="${img}" alt="${escapeHTML(feature.webTitle)}" loading="eager"
+               onerror="this.src='${FALLBACKS.default}'"/></div>
+          <div class="cat-feature-body">
+            <div class="article-meta">
+              <span class="category font-sans">${escapeHTML(feature.sectionName)}</span>
+              <span class="divider">•</span>
+              <span class="date">${timeAgo(feature.webPublicationDate)}</span>
+            </div>
+            <h2 class="main-headline"><a href="${url}" style="color:inherit;text-decoration:none">${escapeHTML(feature.webTitle)}</a></h2>
+            <p class="news-excerpt">${escapeHTML(trail)}</p>
+            <a href="${url}" class="read-more" style="margin-top:.5rem">Read Full Story <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>`;
+    }
+    // Grid = rest
+    renderGrid(articles.slice(1), true);
+  } else {
+    renderGrid(articles, false);
+  }
+
+  document.getElementById('loadMoreBtn').disabled = currentPage >= totalPages;
+  reattachInteractivity();
+}
+
+function renderGrid(articles, clear = false) {
+  const grid = document.getElementById('articlesGrid');
+  const html = articles.map(a => {
+    const img = getThumb(a);
+    const badge = sectionBadgeClass(a.sectionId);
+    const trail = a.fields?.trailText || '';
+    const url = articlePageUrl(a);
+    return `
+      <article class="news-card" data-scroll>
+        <div class="card-image-container">
+          <img src="${img}" alt="${escapeHTML(a.webTitle)}" class="news-img" loading="lazy"
+               onerror="this.src='${FALLBACKS.default}'"/>
+          <span class="category-badge ${badge}">${escapeHTML(a.sectionName)}</span>
+          <button class="card-bookmark" data-bookmarked="false" aria-label="Bookmark"><i class="far fa-bookmark"></i></button>
+        </div>
+        <div class="card-body">
+          <h3 class="news-title"><a href="${url}">${escapeHTML(a.webTitle)}</a></h3>
+          <p class="news-excerpt">${escapeHTML(trail.slice(0,130))}${trail.length>130?'…':''}</p>
+          <div class="card-footer">
+            <a href="${url}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+            <div class="card-stats"><span>${timeAgo(a.webPublicationDate)}</span></div>
+          </div>
+        </div>
+      </article>`;
+  }).join('');
+  if (clear) grid.innerHTML = html;
+  else grid.innerHTML += html;
+}
+
+async function loadMore() {
+  currentPage++;
+  const btn = document.getElementById('loadMoreBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Loading…';
+  const data = await getSectionArticles(SECTION, 10, currentPage, currentOrder);
+  if (data?.results) renderGrid(data.results, false);
+  btn.innerHTML = '<i class="fas fa-plus"></i> Load More Articles';
+  btn.disabled = currentPage >= totalPages;
+  reattachInteractivity();
+}
+
+loadArticles(true);
+</script>
+</body>
+</html>

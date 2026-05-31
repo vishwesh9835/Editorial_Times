@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Editorial Times - Live breaking news, deep analytics and stories from around the globe, powered by The Guardian API."/>
+  <title>Editorial Times - Breaking News & Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="loading">
+
+<div class="reading-progress-bar" id="progressBar" aria-hidden="true"></div>
+<a href="#main-content" class="skip-to-content">Skip to content</a>
+
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Open Navigation">
+  <i class="fas fa-bars"></i>
+</button>
+<button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle Dark Mode">
+  <i class="fas fa-moon"></i>
+</button>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<aside class="sidebar" id="sidebar" aria-label="Main Navigation">
+  <div class="sidebar-header">
+    <h2 class="sidebar-brand">Editorial Times</h2>
+    <button class="sidebar-close" id="sidebarClose" aria-label="Close Sidebar">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-avatar">ET</div>
+    <div class="user-info">
+      <span class="user-name">Guest Reader</span>
+      <span class="user-status">Free Access · Live News</span>
+    </div>
+  </div>
+  <div class="search-container">
+    <input type="text" placeholder="Search news, topics..." id="searchInput" aria-label="Search articles"/>
+    <button class="search-btn" id="searchBtn" aria-label="Search">
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
+  <nav class="sidebar-nav">
+    <ul class="menu">
+      <li class="menu-item active">
+        <a href="index.html" class="menu-link">
+          <div><i class="fas fa-home"></i><span>Home</span></div>
+        </a>
+      </li>
+      <li class="menu-item has-submenu">
+        <button class="menu-link toggle-submenu" aria-expanded="false" aria-controls="news-sub">
+          <div><i class="fas fa-newspaper"></i><span>News</span></div>
+          <i class="fas fa-chevron-down arrow"></i>
+        </button>
+        <ul class="submenu" id="news-sub">
+          <li><a href="category.html?section=world">World News</a></li>
+          <li><a href="category.html?section=politics">Politics</a></li>
+          <li><a href="category.html?section=business">Business</a></li>
+          <li><a href="category.html?section=technology">Technology</a></li>
+        </ul>
+      </li>
+      <li class="menu-item">
+        <a href="category.html?section=sport" class="menu-link">
+          <div><i class="fas fa-futbol"></i><span>Sports</span></div>
+        </a>
+      </li>
+      <li class="menu-item has-submenu">
+        <button class="menu-link toggle-submenu" aria-expanded="false" aria-controls="biz-sub">
+          <div><i class="fas fa-chart-line"></i><span>Business</span></div>
+          <i class="fas fa-chevron-down arrow"></i>
+        </button>
+        <ul class="submenu" id="biz-sub">
+          <li><a href="category.html?section=business">Markets</a></li>
+          <li><a href="category.html?section=business">Economy</a></li>
+        </ul>
+      </li>
+      <li class="menu-item has-submenu">
+        <button class="menu-link toggle-submenu" aria-expanded="false" aria-controls="tech-sub">
+          <div><i class="fas fa-lightbulb"></i><span>Innovation</span></div>
+          <i class="fas fa-chevron-down arrow"></i>
+        </button>
+        <ul class="submenu" id="tech-sub">
+          <li><a href="category.html?section=technology">Artificial Intelligence</a></li>
+          <li><a href="category.html?section=science">Science</a></li>
+          <li><a href="category.html?section=environment">Environment</a></li>
+        </ul>
+      </li>
+      <li class="menu-item has-submenu">
+        <button class="menu-link toggle-submenu" aria-expanded="false" aria-controls="cult-sub">
+          <div><i class="fas fa-palette"></i><span>Culture</span></div>
+          <i class="fas fa-chevron-down arrow"></i>
+        </button>
+        <ul class="submenu" id="cult-sub">
+          <li><a href="category.html?section=film">Film &amp; Cinema</a></li>
+          <li><a href="category.html?section=music">Music</a></li>
+          <li><a href="category.html?section=books">Books</a></li>
+        </ul>
+      </li>
+      <li class="menu-item">
+        <a href="category.html?section=travel" class="menu-link">
+          <div><i class="fas fa-plane"></i><span>Travel</span></div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="category.html?section=lifeandstyle" class="menu-link">
+          <div><i class="fas fa-heart"></i><span>Lifestyle</span></div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="search.html" class="menu-link">
+          <div><i class="fas fa-search"></i><span>Search</span></div>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar-footer">
+    <span class="sidebar-tag">ENGAGE</span>
+    <div class="sidebar-socials">
+      <a href="#" aria-label="Twitter X"><i class="fab fa-x-twitter"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+</aside>
+
+<div class="main-wrapper">
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo">
+          <span class="logo-text">Editorial</span>
+          <span class="logo-accent">Times</span>
+        </div>
+      </div>
+      <div class="header-widgets">
+        <div class="market-ticker" aria-label="Market data">
+          <span class="market-index positive" id="mkt1">NIFTY 50 <i class="fas fa-caret-up"></i> +0.82%</span>
+          <span class="market-index negative" id="mkt2">SENSEX <i class="fas fa-caret-down"></i> -0.12%</span>
+        </div>
+        <div class="header-date">
+          <i class="far fa-calendar-alt"></i>
+          <span id="currentDate"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="top-nav" aria-label="Section navigation">
+    <ul class="nav-list" id="topNavList">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="category.html?section=world">World</a></li>
+      <li><a href="category.html?section=politics">Politics</a></li>
+      <li><a href="category.html?section=business">Business</a></li>
+      <li><a href="category.html?section=technology">Technology</a></li>
+      <li><a href="category.html?section=sport">Sports</a></li>
+      <li><a href="category.html?section=culture">Culture</a></li>
+      <li><a href="category.html?section=opinion">Opinion</a></li>
+      <li><a href="category.html?section=environment">Earth</a></li>
+      <li><a href="search.html">Search</a></li>
+    </ul>
+  </nav>
+
+  <!-- Ticker: populated by API -->
+  <div class="breaking-news-ticker" role="region" aria-label="Breaking news">
+    <span class="ticker-label">LIVE <span class="pulse-dot"></span></span>
+    <div class="ticker-wrap">
+      <div class="ticker-items" id="tickerItems">
+        <span class="ticker-item">Loading latest headlines from around the world...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trending pills: populated by API tags -->
+  <div class="trending-topics" aria-label="Trending topics">
+    <span class="trending-label"><i class="fas fa-fire"></i> TRENDING:</span>
+    <div class="trending-pills" id="trendingPills">
+      <a href="category.html?section=world" class="trending-pill">#WorldNews</a>
+      <a href="category.html?section=technology" class="trending-pill">#AI</a>
+      <a href="category.html?section=science" class="trending-pill">#Science</a>
+      <a href="category.html?section=sport" class="trending-pill">#Sports</a>
+      <a href="category.html?section=business" class="trending-pill">#Business</a>
+      <a href="category.html?section=environment" class="trending-pill">#Climate</a>
+    </div>
+  </div>
+
+  <main class="main-content" id="main-content">
+
+    <!-- HERO: loaded by API -->
+    <article class="featured-story" id="heroSection" data-scroll>
+      <div class="hero-split-grid">
+        <div class="hero-image-wrapper" style="background:hsl(var(--surface-dark))">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;opacity:.3;font-size:3rem;">
+            <i class="fas fa-newspaper"></i>
+          </div>
+        </div>
+        <div class="hero-content-wrapper">
+          <div style="display:flex;flex-direction:column;gap:1rem">
+            <div class="skel-card" style="height:20px;width:30%;border-radius:6px"></div>
+            <div class="skel-card" style="height:40px;border-radius:8px"></div>
+            <div class="skel-card" style="height:40px;width:80%;border-radius:8px"></div>
+            <div class="skel-card" style="height:80px;border-radius:8px;margin-top:.5rem"></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- MAIN GRID: left big card + right secondary -->
+    <section class="news-grid" id="mainGrid">
+      <div class="skel-card main-card" style="min-height:400px"></div>
+      <div class="secondary-column" id="secondaryCol">
+        <div class="skel-card" style="min-height:180px"></div>
+        <div class="skel-card" style="min-height:180px"></div>
+      </div>
+      <!-- Live TV widget stays as-is -->
+      <section class="live-section" data-scroll aria-label="Live TV Feed">
+        <div class="live-header">
+          <h2><i class="fas fa-broadcast-tower"></i> Live Feed</h2>
+          <span class="live-badge">● LIVE ON-AIR</span>
+        </div>
+        <div class="video-showcase-box">
+          <div class="noise-overlay"></div>
+          <div class="interactive-tv-container">
+            <div class="tv-screen-content">
+              <i class="fas fa-play-circle play-overlay-trigger" id="tvPlayIcon" role="button" tabindex="0" aria-label="Toggle playback"></i>
+              <div class="tv-ticker-overlay">
+                <span class="tv-ticker-tag">ET LIVE</span>
+                <span class="tv-ticker-text" id="tvTickerText">Loading latest news...</span>
+              </div>
+            </div>
+          </div>
+          <div class="tv-controls-dashboard">
+            <div class="playback-bar">
+              <button class="tv-dash-btn" id="tvMuteBtn" aria-label="Mute"><i class="fas fa-volume-up"></i></button>
+              <span class="feed-uptime">Live Feed Online</span>
+            </div>
+            <div class="live-audio-waveform" aria-hidden="true">
+              <span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span>
+              <span class="wave-bar"></span><span class="wave-bar"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Quick briefs: loaded by API -->
+      <section class="quick-news" id="quickBriefs" data-scroll aria-label="Latest briefs">
+        <div class="quick-section">
+          <h3><i class="fas fa-microchip"></i> Tech Briefs</h3>
+          <div id="techBriefs"><div class="skel-line" style="height:14px;margin:.6rem 0;border-radius:4px;background:hsl(var(--surface-dark))"></div><div class="skel-line" style="height:14px;width:80%;border-radius:4px;background:hsl(var(--surface-dark))"></div></div>
+        </div>
+        <div class="quick-section">
+          <h3><i class="fas fa-trophy"></i> Sports Briefs</h3>
+          <div id="sportsBriefs"><div class="skel-line" style="height:14px;margin:.6rem 0;border-radius:4px;background:hsl(var(--surface-dark))"></div><div class="skel-line" style="height:14px;width:70%;border-radius:4px;background:hsl(var(--surface-dark))"></div></div>
+        </div>
+      </section>
+    </section>
+
+    <!-- CATEGORY STRIPS -->
+    <div id="categoryStrips"></div>
+
+    <!-- Newsletter -->
+    <section class="newsletter-cta" data-scroll>
+      <div class="newsletter-grid">
+        <div class="newsletter-heading">
+          <div class="envelope-badge"><i class="fas fa-envelope-open-text"></i></div>
+          <h2>Get the Editorial Times Morning Briefing</h2>
+          <p>Join over 150,000 readers. Daily premium wrap-up to your inbox — free forever.</p>
+        </div>
+        <form class="newsletter-form" id="newsletterForm" aria-label="Newsletter signup">
+          <div class="form-input-group">
+            <input type="email" placeholder="Enter your email address" required/>
+            <button type="submit" class="submit-btn">
+              <span class="btn-text">Subscribe Free</span>
+              <span class="btn-spinner"><i class="fas fa-circle-notch fa-spin"></i></span>
+            </button>
+          </div>
+          <p class="form-privacy-note">We respect your privacy. Unsubscribe anytime. <a href="#">Privacy Policy</a>.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand-column">
+        <div class="footer-logo">
+          <span class="logo-text">Editorial</span>
+          <span class="logo-accent">Times</span>
+        </div>
+        <p class="footer-mission">Independent journalism powered by The Guardian Open Platform. Committed to accuracy, depth, and editorial integrity.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Twitter X"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <nav class="footer-nav">
+        <div class="footer-links-group">
+          <span class="footer-col-title">News</span>
+          <a href="category.html?section=world">World</a>
+          <a href="category.html?section=politics">Politics</a>
+          <a href="category.html?section=business">Business</a>
+          <a href="category.html?section=technology">Technology</a>
+        </div>
+        <div class="footer-links-group">
+          <span class="footer-col-title">Life</span>
+          <a href="category.html?section=sport">Sports</a>
+          <a href="category.html?section=culture">Culture</a>
+          <a href="category.html?section=travel">Travel</a>
+          <a href="category.html?section=lifeandstyle">Lifestyle</a>
+        </div>
+        <div class="footer-links-group">
+          <span class="footer-col-title">More</span>
+          <a href="search.html">Search</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Contact Us</a>
+          <a href="https://open-platform.theguardian.com" target="_blank" rel="noopener">Powered by Guardian API</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p class="copyright">Copyright &copy; 2026 Editorial Times. Content sourced from The Guardian via open API.</p>
+      <div class="footer-meta-links">
+        <a href="#"><i class="fas fa-universal-access"></i> Accessibility</a>
+        <a href="#"><i class="fas fa-globe"></i> English</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
+
+<script src="script.js"></script>
+<script src="api.js"></script>
+<script>
+// ── HOME PAGE LOGIC ─────────────────────────────────────────────────────────
+
+async function loadHero() {
+  const data = await getLatest(1);
+  if (!data?.results?.length) return;
+  const a = data.results[0];
+  const img = getThumb(a);
+  const trail = a.fields?.trailText || '';
+  const byline = a.fields?.byline || a.sectionName;
+  const ago = timeAgo(a.webPublicationDate);
+  document.getElementById('heroSection').innerHTML = `
+    <div class="hero-split-grid">
+      <div class="hero-image-wrapper">
+        <img src="${img}" alt="${escapeHTML(a.webTitle)}" class="story-image" width="800" height="500"
+             onerror="this.src='${FALLBACKS.default}'"/>
+        <div class="hero-tag-badge">LATEST</div>
+      </div>
+      <div class="hero-content-wrapper">
+        <div class="article-meta">
+          <span class="category font-sans">${escapeHTML(a.sectionName)}</span>
+          <span class="divider">•</span>
+          <span class="date">${ago}</span>
+        </div>
+        <h1 class="main-headline">${escapeHTML(a.webTitle)}</h1>
+        <div class="story-text">
+          <p class="lead">${escapeHTML(trail)}</p>
+        </div>
+        <div class="article-actions">
+          <a href="${articlePageUrl(a)}" class="action-btn read-more">Read Story <i class="fas fa-arrow-right"></i></a>
+          <button class="action-btn bookmark-btn" data-bookmarked="false" aria-label="Bookmark">
+            <i class="far fa-bookmark"></i>
+          </button>
+          <button class="action-btn share-btn" aria-label="Share"><i class="far fa-share-square"></i></button>
+        </div>
+      </div>
+    </div>`;
+  // update live TV ticker text
+  const tvText = document.getElementById('tvTickerText');
+  if (tvText) tvText.textContent = a.webTitle;
+  reattachInteractivity();
+}
+
+async function loadMainGrid() {
+  const data = await getTopStories(3, 2); // skip page 1 (hero used it)
+  if (!data?.results) return;
+  const [main, c1, c2] = data.results;
+
+  if (main) {
+    document.querySelector('#mainGrid .skel-card.main-card').outerHTML = renderBigCard(main);
+  }
+  const sec = document.getElementById('secondaryCol');
+  const cards = [c1, c2].filter(Boolean).map(renderCompactCard).join('');
+  sec.innerHTML = cards || '';
+  reattachInteractivity();
+}
+
+function renderBigCard(a) {
+  const img = getThumb(a);
+  const badge = sectionBadgeClass(a.sectionId);
+  const trail = a.fields?.trailText || '';
+  const url = articlePageUrl(a);
+  return `
+  <article class="news-card main-card" data-scroll>
+    <div class="card-image-container">
+      <img src="${img}" alt="${escapeHTML(a.webTitle)}" class="news-img" width="600" height="350"
+           onerror="this.src='${FALLBACKS.default}'"/>
+      <span class="category-badge ${badge}">${escapeHTML(a.sectionName)}</span>
+      <button class="card-bookmark" data-bookmarked="false" aria-label="Bookmark"><i class="far fa-bookmark"></i></button>
+    </div>
+    <div class="card-body">
+      <h2 class="news-title"><a href="${url}">${escapeHTML(a.webTitle)}</a></h2>
+      <p class="news-excerpt">${escapeHTML(trail)}</p>
+      <div class="card-footer">
+        <a href="${url}" class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+        <div class="card-stats"><span><i class="far fa-clock"></i> ${timeAgo(a.webPublicationDate)}</span></div>
+      </div>
+    </div>
+  </article>`;
+}
+
+function renderCompactCard(a) {
+  const img = getThumb(a);
+  const badge = sectionBadgeClass(a.sectionId);
+  const trail = a.fields?.trailText || '';
+  const url = articlePageUrl(a);
+  return `
+  <article class="news-card compact" data-scroll>
+    <div class="compact-content">
+      <div class="card-image-container">
+        <img src="${img}" alt="${escapeHTML(a.webTitle)}" class="compact-img" width="200" height="180"
+             onerror="this.src='${FALLBACKS.default}'"/>
+        <span class="category-badge ${badge}">${escapeHTML(a.sectionName)}</span>
+        <button class="card-bookmark" data-bookmarked="false" aria-label="Bookmark"><i class="far fa-bookmark"></i></button>
+      </div>
+      <div class="compact-text">
+        <h3 class="news-title small"><a href="${url}">${escapeHTML(a.webTitle)}</a></h3>
+        <p class="news-excerpt">${escapeHTML(trail.slice(0,120))}${trail.length > 120 ? '…' : ''}</p>
+        <div class="card-footer">
+          <a href="${url}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          <span class="brief-time">${timeAgo(a.webPublicationDate)}</span>
+        </div>
+      </div>
+    </div>
+  </article>`;
+}
+
+function renderQuickItem(a) {
+  const url = articlePageUrl(a);
+  return `
+  <article class="quick-item">
+    <div class="brief-meta">
+      <span class="brief-time">${timeAgo(a.webPublicationDate)}</span>
+      <span class="brief-bullet"></span>
+    </div>
+    <h4><a href="${url}">${escapeHTML(a.webTitle)}</a></h4>
+    <p>${escapeHTML((a.fields?.trailText || '').slice(0,110))}…</p>
+  </article>`;
+}
+
+async function loadQuickBriefs() {
+  const [tech, sport] = await Promise.all([
+    getCategoryStrip('technology', 2),
+    getCategoryStrip('sport', 2)
+  ]);
+  if (tech?.results) document.getElementById('techBriefs').innerHTML = tech.results.map(renderQuickItem).join('');
+  if (sport?.results) document.getElementById('sportsBriefs').innerHTML = sport.results.map(renderQuickItem).join('');
+}
+
+async function loadTicker() {
+  const data = await getTopStories(12);
+  if (!data?.results) return;
+  const items = data.results.map(a => `<span class="ticker-item">${escapeHTML(a.webTitle)}</span>`).join('');
+  const track = document.getElementById('tickerItems');
+  track.innerHTML = items + items; // duplicate for seamless loop
+}
+
+const CAT_STRIPS = [
+  { section:'world',      label:'World News',   icon:'fa-globe' },
+  { section:'technology', label:'Technology',   icon:'fa-microchip' },
+  { section:'sport',      label:'Sports',       icon:'fa-futbol' },
+  { section:'business',   label:'Business',     icon:'fa-chart-line' },
+];
+
+async function loadCategoryStrips() {
+  const container = document.getElementById('categoryStrips');
+  for (const { section, label, icon } of CAT_STRIPS) {
+    const stripEl = document.createElement('div');
+    stripEl.className = 'cat-strip';
+    stripEl.innerHTML = `
+      <div class="cat-strip-header">
+        <div class="cat-strip-title"><i class="fas ${icon} strip-icon"></i>${label}</div>
+        <a href="category.html?section=${section}" class="cat-strip-link">View All <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="strip-grid" id="strip-${section}">${skeleton(3)}</div>`;
+    container.appendChild(stripEl);
+
+    const data = await getCategoryStrip(section, 3);
+    const grid = document.getElementById(`strip-${section}`);
+    if (data?.results?.length) {
+      grid.innerHTML = data.results.map(a => {
+        const img = getThumb(a);
+        const url = articlePageUrl(a);
+        return `
+          <a href="${url}" class="strip-card" data-scroll>
+            <div class="strip-card-img"><img src="${img}" alt="${escapeHTML(a.webTitle)}" loading="lazy"
+                 onerror="this.src='${FALLBACKS[section] || FALLBACKS.default}'"/></div>
+            <div class="strip-card-body">
+              <div class="strip-card-tag">${escapeHTML(a.sectionName)}</div>
+              <div class="strip-card-title">${escapeHTML(a.webTitle)}</div>
+              <div class="strip-card-meta">${timeAgo(a.webPublicationDate)}</div>
+            </div>
+          </a>`;
+      }).join('');
+      reattachInteractivity();
+    } else {
+      grid.innerHTML = '<p style="color:hsl(var(--muted));font-size:.9rem;padding:1rem">No articles available right now.</p>';
+    }
+  }
+}
+
+// Boot
+(async () => {
+  await Promise.all([loadHero(), loadTicker()]);
+  await Promise.all([loadMainGrid(), loadQuickBriefs()]);
+  loadCategoryStrips();
+})();
+</script>
+</body>
+</html>

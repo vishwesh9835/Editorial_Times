@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search - Editorial Times</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="loading">
+
+<div class="reading-progress-bar" id="progressBar" aria-hidden="true"></div>
+<a href="#main-content" class="skip-to-content">Skip to content</a>
+<button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+<button class="dark-mode-toggle" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2 class="sidebar-brand">Editorial Times</h2>
+    <button class="sidebar-close" id="sidebarClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-avatar">ET</div>
+    <div class="user-info"><span class="user-name">Guest Reader</span><span class="user-status">Free Access</span></div>
+  </div>
+  <div class="search-container">
+    <input type="text" placeholder="Search news, topics..." id="searchInput"/>
+    <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
+  </div>
+  <nav class="sidebar-nav">
+    <ul class="menu">
+      <li class="menu-item"><a href="index.html" class="menu-link"><div><i class="fas fa-home"></i><span>Home</span></div></a></li>
+      <li class="menu-item has-submenu">
+        <button class="menu-link toggle-submenu" aria-expanded="false" aria-controls="news-sub">
+          <div><i class="fas fa-newspaper"></i><span>News</span></div><i class="fas fa-chevron-down arrow"></i>
+        </button>
+        <ul class="submenu" id="news-sub">
+          <li><a href="category.html?section=world">World News</a></li>
+          <li><a href="category.html?section=politics">Politics</a></li>
+          <li><a href="category.html?section=business">Business</a></li>
+          <li><a href="category.html?section=technology">Technology</a></li>
+        </ul>
+      </li>
+      <li class="menu-item"><a href="category.html?section=sport" class="menu-link"><div><i class="fas fa-futbol"></i><span>Sports</span></div></a></li>
+      <li class="menu-item active"><a href="search.html" class="menu-link"><div><i class="fas fa-search"></i><span>Search</span></div></a></li>
+    </ul>
+  </nav>
+  <div class="sidebar-footer">
+    <span class="sidebar-tag">ENGAGE</span>
+    <div class="sidebar-socials">
+      <a href="#"><i class="fab fa-x-twitter"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+</aside>
+
+<div class="main-wrapper">
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo"><a href="index.html" style="text-decoration:none;display:flex;align-items:baseline;gap:.3rem">
+          <span class="logo-text">Editorial</span><span class="logo-accent">Times</span>
+        </a></div>
+      </div>
+      <div class="header-widgets">
+        <div class="header-date"><i class="far fa-calendar-alt"></i><span id="currentDate"></span></div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="top-nav">
+    <ul class="nav-list">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="category.html?section=world">World</a></li>
+      <li><a href="category.html?section=technology">Technology</a></li>
+      <li><a href="category.html?section=sport">Sports</a></li>
+      <li><a href="category.html?section=business">Business</a></li>
+      <li><a href="category.html?section=science">Science</a></li>
+      <li><a href="search.html" class="active">Search</a></li>
+    </ul>
+  </nav>
+
+  <main id="main-content">
+    <!-- Search hero -->
+    <div class="search-hero">
+      <h1>Search the Archives</h1>
+      <div class="search-bar-wrap">
+        <input type="text" id="queryInput" placeholder="Search for any topic, event or story…" autocomplete="off" aria-label="Search query"/>
+        <button onclick="doSearch()" aria-label="Search"><i class="fas fa-search"></i></button>
+      </div>
+
+      <!-- Section filter pills -->
+      <div class="search-filters" id="sectionFilters">
+        <button class="filter-pill active" data-section="" onclick="setSection('',this)">All</button>
+        <button class="filter-pill" data-section="world" onclick="setSection('world',this)">World</button>
+        <button class="filter-pill" data-section="technology" onclick="setSection('technology',this)">Technology</button>
+        <button class="filter-pill" data-section="sport" onclick="setSection('sport',this)">Sports</button>
+        <button class="filter-pill" data-section="business" onclick="setSection('business',this)">Business</button>
+        <button class="filter-pill" data-section="politics" onclick="setSection('politics',this)">Politics</button>
+        <button class="filter-pill" data-section="culture" onclick="setSection('culture',this)">Culture</button>
+        <button class="filter-pill" data-section="science" onclick="setSection('science',this)">Science</button>
+        <button class="filter-pill" data-section="environment" onclick="setSection('environment',this)">Environment</button>
+      </div>
+    </div>
+
+    <!-- Results meta row -->
+    <div class="search-meta" id="searchMeta" style="display:none"></div>
+
+    <!-- Results -->
+    <div class="results-list" id="resultsList"></div>
+
+    <!-- No results -->
+    <div id="noResults" style="display:none" class="no-results">
+      <div class="icon"><i class="fas fa-search"></i></div>
+      <h3>No results found</h3>
+      <p>Try different keywords or browse a category below.</p>
+      <div class="suggestions">
+        <button class="sugg-btn" onclick="suggest('Climate change')">Climate change</button>
+        <button class="sugg-btn" onclick="suggest('Artificial intelligence')">Artificial intelligence</button>
+        <button class="sugg-btn" onclick="suggest('Space exploration')">Space exploration</button>
+        <button class="sugg-btn" onclick="suggest('World economy')">World economy</button>
+        <button class="sugg-btn" onclick="suggest('Sports news')">Sports news</button>
+      </div>
+    </div>
+
+    <!-- Default state: trending searches -->
+    <div id="defaultState">
+      <div style="text-align:center;padding:2rem 0 1rem">
+        <p style="font-size:.88rem;font-weight:700;color:hsl(var(--muted));letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.2rem">Popular Searches</p>
+        <div class="suggestions">
+          <button class="sugg-btn" onclick="suggest('Climate change')">Climate change</button>
+          <button class="sugg-btn" onclick="suggest('Artificial intelligence')">Artificial intelligence</button>
+          <button class="sugg-btn" onclick="suggest('Space exploration')">Space exploration</button>
+          <button class="sugg-btn" onclick="suggest('World economy')">World economy</button>
+          <button class="sugg-btn" onclick="suggest('Sports 2026')">Sports 2026</button>
+          <button class="sugg-btn" onclick="suggest('Electric vehicles')">Electric vehicles</button>
+          <button class="sugg-btn" onclick="suggest('Healthcare')">Healthcare</button>
+          <button class="sugg-btn" onclick="suggest('Ukraine war')">Ukraine war</button>
+        </div>
+      </div>
+      <!-- Browse categories -->
+      <div style="margin-top:3rem">
+        <p style="text-align:center;font-size:.88rem;font-weight:700;color:hsl(var(--muted));letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.5rem">Browse by Section</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem">
+          <a href="category.html?section=world" style="display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.5rem 1rem;background:hsl(var(--surface));border:1px solid hsl(var(--border));border-radius:14px;text-decoration:none;transition:all var(--transition-fast);box-shadow:var(--shadow-sm)" 
+             onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='hsl(var(--primary)/0.3)'"
+             onmouseout="this.style.transform='';this.style.borderColor=''">
+            <span style="font-size:2rem">🌍</span>
+            <span style="font-size:.88rem;font-weight:700;color:hsl(var(--foreground))">World News</span>
+          </a>
+          <a href="category.html?section=technology" style="display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.5rem 1rem;background:hsl(var(--surface));border:1px solid hsl(var(--border));border-radius:14px;text-decoration:none;transition:all var(--transition-fast);box-shadow:var(--shadow-sm)" 
+             onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='hsl(var(--primary)/0.3)'"
+             onmouseout="this.style.transform='';this.style.borderColor=''">
+            <span style="font-size:2rem">💻</span>
+            <span style="font-size:.88rem;font-weight:700;color:hsl(var(--foreground))">Technology</span>
+          </a>
+          <a href="category.html?section=sport" style="display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.5rem 1rem;background:hsl(var(--surface));border:1px solid hsl(var(--border));border-radius:14px;text-decoration:none;transition:all var(--transition-fast);box-shadow:var(--shadow-sm)" 
+             onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='hsl(var(--primary)/0.3)'"
+             onmouseout="this.style.transform='';this.style.borderColor=''">
+            <span style="font-size:2rem">⚽</span>
+            <span style="font-size:.88rem;font-weight:700;color:hsl(var(--foreground))">Sports</span>
+          </a>
+          <a href="category.html?section=business" style="display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.5rem 1rem;background:hsl(var(--surface));border:1px solid hsl(var(--border));border-radius:14px;text-decoration:none;transition:all var(--transition-fast);box-shadow:var(--shadow-sm)" 
+             onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='hsl(var(--primary)/0.3)'"
+             onmouseout="this.style.transform='';this.style.borderColor=''">
+            <span style="font-size:2rem">📈</span>
+            <span style="font-size:.88rem;font-weight:700;color:hsl(var(--foreground))">Business</span>
+          </a>
+          <a href="category.html?section=politics" style="display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.5rem 1rem;background:hsl(var(--surface));border:1px solid hsl(var(--border));border-radius:14px;text-decoration:none;transition:all var(--transition-fast);box-shadow:var(--shadow-sm)" 
+             onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='hsl(var(--primary)/0.3)'"
+             onmouseout="this.style.transform='';this.style.borderColor=''">
+            <span style="font-size:2rem">🏛️</span>
+            <span style="font-size:.88rem;font-weight:700;color:hsl(var(--foreground))">Politics</span>
+          </a>
+          <a href="category.html?section=culture" style="display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.5rem 1rem;background:hsl(var(--surface));border:1px solid hsl(var(--border));border-radius:14px;text-decoration:none;transition:all var(--transition-fast);box-shadow:var(--shadow-sm)" 
+             onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='hsl(var(--primary)/0.3)'"
+             onmouseout="this.style.transform='';this.style.borderColor=''">
+            <span style="font-size:2rem">🎭</span>
+            <span style="font-size:.88rem;font-weight:700;color:hsl(var(--foreground))">Culture</span>
+          </a>
+          <a href="category.html?section=science" style="display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.5rem 1rem;background:hsl(var(--surface));border:1px solid hsl(var(--border));border-radius:14px;text-decoration:none;transition:all var(--transition-fast);box-shadow:var(--shadow-sm)" 
+             onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='hsl(var(--primary)/0.3)'"
+             onmouseout="this.style.transform='';this.style.borderColor=''">
+            <span style="font-size:2rem">🔬</span>
+            <span style="font-size:.88rem;font-weight:700;color:hsl(var(--foreground))">Science</span>
+          </a>
+          <a href="category.html?section=environment" style="display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.5rem 1rem;background:hsl(var(--surface));border:1px solid hsl(var(--border));border-radius:14px;text-decoration:none;transition:all var(--transition-fast);box-shadow:var(--shadow-sm)" 
+             onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='hsl(var(--primary)/0.3)'"
+             onmouseout="this.style.transform='';this.style.borderColor=''">
+            <span style="font-size:2rem">🌱</span>
+            <span style="font-size:.88rem;font-weight:700;color:hsl(var(--foreground))">Environment</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Load more results -->
+    <div class="load-more-wrap" id="loadMoreWrap" style="display:none">
+      <button class="load-more-btn" id="loadMoreBtn" onclick="loadMoreResults()">
+        <i class="fas fa-plus"></i> Load More Results
+      </button>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand-column">
+        <div class="footer-logo"><span class="logo-text">Editorial</span><span class="logo-accent">Times</span></div>
+        <p class="footer-mission">Independent journalism powered by The Guardian Open Platform.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-x-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <nav class="footer-nav">
+        <div class="footer-links-group">
+          <span class="footer-col-title">Sections</span>
+          <a href="category.html?section=world">World</a>
+          <a href="category.html?section=technology">Technology</a>
+          <a href="category.html?section=sport">Sports</a>
+          <a href="category.html?section=business">Business</a>
+        </div>
+        <div class="footer-links-group">
+          <span class="footer-col-title">More</span>
+          <a href="index.html">Home</a>
+          <a href="search.html">Search</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p class="copyright">Copyright &copy; 2026 Editorial Times. Content via The Guardian API.</p>
+    </div>
+  </footer>
+</div>
+
+<div class="toast-container" id="toastContainer" aria-live="assertive"></div>
+<script src="script.js"></script>
+<script src="api.js"></script>
+<script>
+const urlP = new URLSearchParams(location.search);
+let currentQuery = urlP.get('q') || '';
+let currentSection = '';
+let currentPage = 1;
+let totalResults = 0;
+let debounceTimer;
+
+const queryInput = document.getElementById('queryInput');
+const resultsList = document.getElementById('resultsList');
+
+if (currentQuery) {
+  queryInput.value = currentQuery;
+  doSearch();
+}
+
+queryInput.addEventListener('input', () => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    currentQuery = queryInput.value.trim();
+    if (currentQuery.length > 1) { currentPage = 1; doSearch(); }
+    else { showDefault(); }
+  }, 450);
+});
+
+queryInput.addEventListener('keydown', e => { 
+  if (e.key === 'Enter') {
+    clearTimeout(debounceTimer);
+    doSearch(); 
+  }
+});
+
+function setSection(sec, btn) {
+  document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentSection = sec;
+  if (currentQuery) { currentPage = 1; doSearch(); }
+}
+
+function suggest(q) {
+  queryInput.value = q;
+  currentQuery = q;
+  currentPage = 1;
+  doSearch();
+}
+
+function showDefault() {
+  document.getElementById('defaultState').style.display = '';
+  document.getElementById('searchMeta').style.display = 'none';
+  document.getElementById('noResults').style.display = 'none';
+  document.getElementById('loadMoreWrap').style.display = 'none';
+  resultsList.innerHTML = '';
+}
+
+async function doSearch() {
+  currentQuery = queryInput.value.trim();
+  if (!currentQuery) return showDefault();
+
+  // Update URL
+  const url = new URL(location.href);
+  url.searchParams.set('q', currentQuery);
+  history.replaceState({}, '', url);
+
+  document.getElementById('defaultState').style.display = 'none';
+  document.getElementById('noResults').style.display = 'none';
+  document.getElementById('searchMeta').style.display = 'none';
+  document.getElementById('loadMoreWrap').style.display = 'none';
+
+  if (currentPage === 1) resultsList.innerHTML = skeleton(5, true);
+
+  const extra = {};
+  if (currentSection) extra.section = currentSection;
+  extra.page = currentPage;
+
+  const data = await searchArticles(currentQuery, extra);
+  if (!data) { resultsList.innerHTML = '<p style="color:hsl(var(--muted));text-align:center;padding:2rem">Search temporarily unavailable.</p>'; return; }
+
+  totalResults = data.total || 0;
+  const articles = data.results || [];
+
+  if (!articles.length) {
+    resultsList.innerHTML = '';
+    document.getElementById('noResults').style.display = 'block';
+    return;
+  }
+
+  const meta = document.getElementById('searchMeta');
+  meta.style.display = 'block';
+  meta.innerHTML = `<strong>${totalResults.toLocaleString()}</strong> results for "<strong>${escapeHTML(currentQuery)}</strong>"${currentSection ? ` in <strong>${escapeHTML(currentSection)}</strong>` : ''}`;
+
+  if (currentPage === 1) resultsList.innerHTML = articles.map(renderResult).join('');
+  else resultsList.innerHTML += articles.map(renderResult).join('');
+
+  const totalPgs = data.pages || 1;
+  if (currentPage < totalPgs) {
+    document.getElementById('loadMoreWrap').style.display = 'block';
+    document.getElementById('loadMoreBtn').disabled = false;
+  }
+  reattachInteractivity();
+}
+
+async function loadMoreResults() {
+  currentPage++;
+  const btn = document.getElementById('loadMoreBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Loading…';
+  await doSearch();
+  btn.innerHTML = '<i class="fas fa-plus"></i> Load More Results';
+}
+
+function renderResult(a) {
+  const img = getThumb(a);
+  const trail = a.fields?.trailText || '';
+  const byline = a.fields?.byline || '';
+  const url = articlePageUrl(a);
+  return `
+  <a href="${url}" class="result-card" data-scroll>
+    <div class="result-thumb">
+      <img src="${img}" alt="${escapeHTML(a.webTitle)}" loading="lazy" onerror="this.src='${FALLBACKS.default}'"/>
+    </div>
+    <div class="result-body">
+      <div class="result-section">${escapeHTML(a.sectionName)}</div>
+      <div class="result-title">${escapeHTML(a.webTitle)}</div>
+      <div class="result-excerpt">${escapeHTML(trail)}</div>
+      <div class="result-meta">
+        ${byline ? `<span><i class="fas fa-user"></i> ${escapeHTML(byline)}</span>` : ''}
+        <span><i class="far fa-clock"></i> ${timeAgo(a.webPublicationDate)}</span>
+      </div>
+    </div>
+  </a>`;
+}
+</script>
+</body>
+</html>
